@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Ký</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f8;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 960px;
+            padding: 40px;
+            background-color: #303f9f;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left-side {
+            width: 45%;
+            padding: 20px;
+        }
+
+        .right-side {
+            width: 45%;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-row input[type="text"],
+        .form-row input[type="city"],
+        .form-row input[type="tel"] {
+            width: 48%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+        }
+
+        input[type="email"],
+        select,
+        input[type="city"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+        }
+
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 20px;
+            padding-right: 30px;
+        }
+
+        .submit-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .captcha {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #f4511e;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e03a09;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left-side">
+        <h1>BẠN MUỐN HỌC LẬP TRÌNH?</h1>
+        <h2>GỌI NGAY</h2>
+        <p style="font-size: 1.3em;">098 953 44 58</p>
+    </div>
+    <div class="right-side">
+        <h2>Đăng ký tư vấn lộ trình học lập trình</h2>
+        <p>Đăng ký tư vấn, định hướng lộ trình học và giải đáp các thắc mắc về ngành nghề – Miễn phí – Online.</p>
+        <form>
+            <div class="form-row">
+                <input type="text" name="name" placeholder="Họ và tên" required>
+                <input type="tel" name="phone" placeholder="Điện thoại" required>
+            </div>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="city" name="city" placeholder="Tỉnh/thành phố bạn đang học tập/làm việc" required>
+            <select name="occupation" required>
+                <option value="now">Hiện tại bạn đang là?</option>
+                <option value="student">Học sinh/Sinh viên</option>
+                <option value="worker">Người đi làm</option>
+                <option value="other-occupation">Khác</option>
+            </select>
+            <div class="submit-container">
+                <span class="captcha">1 + 1 =</span>
+                <input type="number" name="captcha" required>
+                <button type="submit">GỬI NGAY</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

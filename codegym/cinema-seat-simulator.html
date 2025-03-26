@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Seats Simulator</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .seating-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            margin: 5px;
+            display: inline-block;
+            text-align: center;
+            line-height: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .seat.selected {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .seat.occupied {
+            background-color: #888;
+            color: #ddd;
+            cursor: not-allowed;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .reset-btn {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reset-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Chọn ghế của bạn</h1>
+    <div class="seating-area" id="seating-area"></div>
+    <div class="controls">
+        <button class="reset-btn" id="reset-btn">Đặt lại</button>
+    </div>
+</div>
+
+<script>
+    // Số hàng và số cột của rạp chiếu phim
+    const rows = 5;
+    const cols = 7;
+
+    // Lấy phần tử HTML chứa khu vực ghế
+    const seatingArea = document.getElementById('seating-area');
+
+    // Khôi phục trạng thái chọn ghế từ localStorage
+    const seatStatus = JSON.parse(localStorage.getItem('seatStatus')) || Array(rows * cols).fill(false);
+
+    // Duyệt qua từng hàng ghế
+    for (let row = 0; row < rows; row++) {
+        // Tạo một phần tử div để chứa hàng ghế
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('row');
+
+        // Duyệt qua từng ghế trong hàng
+        for (let col = 0; col < cols; col++) {
+            // Tạo một phần tử div để chứa một ghế
+            const seatDiv = document.createElement('div');
+            seatDiv.classList.add('seat');
+            seatDiv.textContent = `${String.fromCharCode(65 + row)}${col + 1}`; // Gán tên ghế vào phần tử div
+            seatDiv.setAttribute('onclick', `clickseat(this, ${row * cols + col})`); // Gán sự kiện click vào ghế
+
+            // Kiểm tra trạng thái của ghế và thêm class 'selected' nếu đã được chọn
+            if (seatStatus[row * cols + col]) {
+                seatDiv.classList.add('selected');
+            }
+
+            rowDiv.appendChild(seatDiv); // Thêm ghế vào hàng
+        }
+
+        seatingArea.appendChild(rowDiv); // Thêm hàng vào khu vực ghế
+    }
+
+    // Hàm xử lý sự kiện khi nhấn vào ghế
+    function clickseat(element, index) {
+        // Kiểm tra xem ghế có bị chiếm không
+        if (!element.classList.contains('occupied')) {
+            // Chuyển đổi trạng thái của ghế (được chọn hoặc không)
+            element.classList.toggle('selected');
+
+            // Lưu trạng thái chọn ghế vào localStorage
+            const seatStatus = Array.from(document.querySelectorAll('.seat')).map(seat =>
+                seat.classList.contains('selected')
+            );
+            localStorage.setItem('seatStatus', JSON.stringify(seatStatus));
+        }
+    }
+
+    // Đây chỉ là button reset thôi các bạn.
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        // Xóa trạng thái chọn ghế từ localStorage
+        localStorage.removeItem('seatStatus');
+
+        // Tải lại trang để hiển thị lại các ghế chưa được chọn
+        location.reload();
+    });
+</script>
+</body>
+</html>

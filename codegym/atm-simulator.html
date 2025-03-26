@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .atm {
+            background-color: #2c3e50;
+            border: 5px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            width: 350px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            position: relative;
+        }
+        .screen {
+            background-color: #34495e;
+            height: 100px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: #ecf0f1;
+        }
+        .input-area {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        .message {
+            margin-top: 15px;
+            color: red;
+            text-align: center;
+        }
+        .withdraw-area {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="atm">
+    <div class="screen" id="screen">Chào mừng!</div>
+    <div class="input-area" id="inputArea">
+        <input type="text" id="pinInput" placeholder="Nhập PIN" maxlength="6">
+        <button id="submitPin">Xác nhận</button>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="balance-area" id="balanceArea" style="display: none;">
+        <button id="checkBalance">Kiểm tra số dư</button>
+        <button id="withdrawButton">Rút tiền</button>
+        <div class="withdraw-area" id="withdrawArea">
+            <input type="text" id="withdrawAmount" placeholder="Nhập số tiền cần rút" onkeypress="return isNumber(event)">
+            <button id="confirmWithdraw">Xác nhận rút tiền</button>
+            <div class="message" id="withdrawMessage"></div>
+        </div>
+        <button id="logoutButton">Thoát</button>
+    </div>
+</div>
+
+<script>
+    const correctPin = '123456';
+    let attempts = 0;
+    let balance = 10000000;
+    const username = 'Mạnh';
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    document.getElementById('submitPin').onclick = function() {
+        const pinInput = document.getElementById('pinInput').value;
+        const messageDiv = document.getElementById('message');
+        const screenDiv = document.getElementById('screen');
+
+        if (attempts < 5) {
+            if (pinInput === correctPin) {
+                screenDiv.textContent = "Xin Chào " + username + "!";
+                document.getElementById('balanceArea').style.display = 'block';
+                document.getElementById('inputArea').style.display = 'none';
+                messageDiv.textContent = "";
+            } else {
+                attempts++;
+                if (attempts >= 5) {
+                    screenDiv.textContent = "Tài khoản bị khóa.";
+                    document.getElementById('submitPin').disabled = true;
+                } else {
+                    screenDiv.textContent = "PIN sai lần " + attempts + ", hãy thử lại.";
+					if(attempts >= 4){
+					screenDiv.textContent = "PIN sai lần " + attempts + ", 5 lần sẽ khóa TK";
+					}else{
+					}
+                }
+            }
+        }
+    };
+
+    document.getElementById('checkBalance').onclick = function() {
+        //const messageDiv = document.getElementById('message');
+        const screenDiv = document.getElementById('screen');
+        screenDiv.textContent = "Số dư hiện tại: " + balance.toLocaleString() + " VNĐ";
+    };
+
+    document.getElementById('withdrawButton').onclick = function() {
+        document.getElementById('withdrawArea').style.display = 'block';
+    };
+
+    document.getElementById('confirmWithdraw').onclick = function() {
+        const withdrawAmount = parseInt(document.getElementById('withdrawAmount').value);
+        //const withdrawMessageDiv = document.getElementById('withdrawMessage');
+        const screenDiv = document.getElementById('screen');
+
+        let withdraw = withdrawAmount;
+        while (withdraw > balance) {
+            screenDiv.textContent = "Không đủ số dư.";
+            withdraw = parseInt(document.getElementById('withdrawAmount').value);
+            if (withdraw === 0) {
+                break;
+            }
+        }
+
+        if (withdraw <= balance) {
+            balance -= withdraw;
+            if (balance === 0) {
+                screenDiv.textContent = "Số dư hiện tại: 0 VNĐ";
+            } else {
+                screenDiv.textContent = "Bạn đã rút: " + withdraw.toLocaleString() + " VNĐ";
+            }
+            document.getElementById('withdrawArea').style.display = 'none';
+        }
+    };
+
+    document.getElementById('logoutButton').onclick = function() {
+        location.reload();
+    };
+</script>
+
+</body>
+</html>

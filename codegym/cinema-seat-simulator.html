@@ -118,7 +118,7 @@
 
     // Hàm xử lý sự kiện khi nhấn vào ghế
     function clickseat(element, index) {
-        // Kiểm tra xem ghế có bị chiếm không
+        // Kiểm tra xem ghế đã được chọn chưa
         if (!element.classList.contains('occupied')) {
             // Chuyển đổi trạng thái của ghế (được chọn hoặc không)
             element.classList.toggle('selected');

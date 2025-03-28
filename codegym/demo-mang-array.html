@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Mảng (Array)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            background-color: #f4f4f4;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .result {
+            color: #ff001e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Demo Mảng (Array)</h1>
+
+<div class="container">
+    <div class="section">
+        <h2 id="bai-1">Bài 1: Tính tổng các phần tử trong mảng</h2>
+        <p>Mảng: <span id="input-array"></span></p>
+        <p>Tổng: <span id="sum-result" class="result"></span></p>
+    </div>
+
+    <div class="section">
+        <h2 id="bai-2">Bài 2: Tìm số lớn nhất trong mảng</h2>
+        <p>Mảng: <span id="input-array-max"></span></p>
+        <p>Kết quả: <span id="max-result" class="result"></span></p>
+    </div>
+
+    <div class="section">
+        <h2 id="bai-3">Bài 3: Đếm số lần xuất hiện của một phần tử</h2>
+        <p>Mảng: <span id="input-array-count"></span></p>
+        <p>Phần tử cần đếm: <span id="target-element"></span></p>
+        <p>Số lần xuất hiện: <span id="count-result" class="result"></span></p>
+    </div>
+
+    <div class="section">
+        <h2 id="bai-4">Bài 4: Lọc số chẵn từ mảng</h2>
+        <p>Mảng gốc: <span id="input-array-even"></span></p>
+        <p>Các số chẵn: <span id="even-result" class="result"></span></p>
+    </div>
+
+    <div class="section">
+        <h2 id="bai-5">Bài 5: Xóa phần tử trùng lặp trong mảng</h2>
+        <p>Mảng gốc: <span id="input-array-unique"></span></p>
+        <p>Mảng không trùng lặp: <span id="unique-result" class="result"></span></p>
+    </div>
+</div>
+<script>
+    // Function bài 1 (Tính tổng các phần tử trong mảng)
+    function calculateSum(numbers) {
+        let sum = 0;
+        for (let i = 0; i < numbers.length; i++) {
+            sum += numbers[i];
+        }
+        return sum;
+    }
+
+    // Function bài 2 (Tìm số lớn nhất trong mảng)
+
+    //Cách 1
+    //function findMaxNumber(numbers) {
+    //    return Math.max(...numbers);
+    //}
+
+    //Cách 2
+    function findMaxNumber(numbersMax) {
+        let findMaxNumber = numbersMax[0];
+
+        for (let i = 1; i < numbersMax.length; i++) {
+            if (numbersMax[i] > findMaxNumber) {
+                findMaxNumber = numbersMax[i];
+           }
+        }
+        return findMaxNumber;
+    }
+
+    // Function bài 3 (Đếm số lần xuất hiện của một phần tử)
+    function countElementOccurrences(numbers, target) {
+        let count = 0;
+        for (let i = 0; i < numbers.length; i++) {
+            if (numbers[i] === target) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Function bài 4 (Lọc số chẵn từ mảng)
+    function filterEvenNumbers(numbers) {
+        let evenNumbers = [];
+        for (let i = 0; i < numbers.length; i++) {
+            if (numbers[i] % 2 === 0) {
+                evenNumbers.push(numbers[i]);
+            }
+        }
+        return evenNumbers;
+    }
+
+    // Function bài 5 (Xóa phần tử trùng lặp trong mảng)
+    function removeDuplicates(numbers) {
+        let uniqueNumbers = [];
+        for (let i = 0; i < numbers.length; i++) {
+            if (!uniqueNumbers.includes(numbers[i])) {
+                uniqueNumbers.push(numbers[i]);
+            }
+        }
+        return uniqueNumbers;
+    }
+
+
+/*View Only*/
+
+    // Mảng bài 1
+    let numbers = [1, 2, 3, 4, 5];
+    document.getElementById('input-array').textContent = numbers.join(', ');
+
+    let sum = calculateSum(numbers);
+    document.getElementById('sum-result').textContent = sum;
+
+    // Mảng bài 2
+    let numbersMax = [10, 45, 2, 99, 23];
+    document.getElementById('input-array-max').textContent = numbersMax.join(', ');
+
+    let maxNumber = findMaxNumber(numbersMax);
+    document.getElementById('max-result').textContent = maxNumber;
+
+    //Mảng bài 3
+
+    let numbersCount = [1, 2, 3, 2, 4, 2, 5];
+    let target = 2;
+
+    document.getElementById('input-array-count').textContent = numbersCount.join(', ');
+    document.getElementById('target-element').textContent = target;
+
+    let occurrences = countElementOccurrences(numbersCount, target);
+    document.getElementById('count-result').textContent = occurrences;
+
+    // Mảng cho bài 4
+    let numbersEven = [1, 2, 3, 4, 5, 6];
+    document.getElementById('input-array-even').textContent = numbersEven.join(', ');
+
+    let evenNumbers = filterEvenNumbers(numbersEven);
+    document.getElementById('even-result').textContent = evenNumbers.join(', ');
+
+    // Mảng cho bài 5
+    let numbersDuplicate = [1, 2, 2, 3, 4, 4, 5];
+    document.getElementById('input-array-unique').textContent = numbersDuplicate.join(', ');
+
+    let uniqueNumbers = removeDuplicates(numbersDuplicate);
+    document.getElementById('unique-result').textContent = uniqueNumbers.join(', ');
+</script>
+</body>
+</html>

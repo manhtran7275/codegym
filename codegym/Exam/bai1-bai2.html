@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bài tập 1 & 2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9fafb;
+            color: #222;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        nav {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        nav h2 {
+            margin: 0 0 20px 0;
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        nav li {
+            margin-bottom: 12px;
+        }
+        nav li button {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            color: white;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        nav li button:hover,
+        nav li button.active {
+            background: #2980b9;
+            outline: none;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            background: white;
+            box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+            overflow-y: auto;
+            min-width: 0;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            margin-top: 15px;
+            color: #333;
+        }
+        input[type="number"], input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1.8px solid #ccc;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus, input[type="text"]:focus, textarea:focus {
+            border-color: #2980b9;
+            outline: none;
+        }
+        button.calc-btn {
+            margin-top: 20px;
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button.calc-btn:hover {
+            background-color: #1c5980;
+        }
+        .error {
+            margin-top: 10px;
+            color: #b00020;
+            font-weight: 600;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eaf4fc;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: pre-line;
+            min-height: 48px;
+            color: #145a96;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            nav {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                padding: 10px 5px;
+            }
+            nav ul {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+            }
+            nav li {
+                margin: 0;
+            }
+            nav li button {
+                padding: 10px 14px;
+                font-size: 1rem;
+            }
+            main {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <h2>Mục lục</h2>
+        <ul>
+            <li><button class="tab-btn active" data-tab="q1">Câu 1</button></li>
+            <li><button class="tab-btn" data-tab="q2">Câu 2</button></li>
+            <li><button class="tab-btn" data-tab="q3">Câu 3</button></li>
+        </ul>
+    </nav>
+    <main>
+        <!-- HTML Câu 1 -->
+        <section id="q1" class="tab-content" style="display: block;">
+            <h3>Câu 1: Trung bình cộng số lẻ ở vị trí lẻ</h3>
+            <p>Nhập mảng số nguyên gồm n phần tử (n ≤ 50). Tính trung bình cộng các số lẻ ở vị trí lẻ (vị trí bắt đầu từ 1).</p>
+
+            <label for="q1-n">Nhập số lượng phần tử (n):</label>
+            <input type="number" id="q1-n" min="1" max="50" placeholder="1 đến 50" />
+
+            <label for="q1-array">Nhập các phần tử, cách nhau dấu phẩy:</label>
+            <input type="text" id="q1-array" placeholder="Ví dụ: 1,2,3,4,6,7" disabled />
+
+            <button class="calc-btn" id="q1-btn" disabled>Tính trung bình cộng</button>
+
+            <div class="error" id="q1-error"></div>
+            <div class="result" id="q1-result"></div>
+        </section>
+
+        <!-- HTML Câu 2 -->
+        <section id="q2" class="tab-content" style="display: none;">
+            <h3>Câu 2: Kiểm tra cặp số thân thiết (amicable numbers)</h3>
+            <p>Nhập hai số nguyên dương, kiểm tra xem chúng có phải cặp số thân thiết hay không.</p>
+            <p>Ví dụ:<br>
+                (220, 284) là cặp số thân thiết<br>
+                (123, 456) không phải là cặp số thân thiết</p>
+
+            <label for="q2-num1">Nhập số thứ nhất:</label>
+            <input type="number" id="q2-num1" min="1" placeholder="Số nguyên dương" />
+
+            <label for="q2-num2">Nhập số thứ hai:</label>
+            <input type="number" id="q2-num2" min="1" placeholder="Số nguyên dương" />
+
+            <button class="calc-btn" id="q2-btn">Kiểm tra cặp số thân thiết</button>
+
+            <div class="error" id="q2-error"></div>
+            <div class="result" id="q2-result"></div>
+        </section>
+
+        <!-- HTML Câu 3 -->
+        <section id="q3" class="tab-content" style="display: none;">
+            <h3>Câu 3: Quản Lí Sách</h3>
+            <button class="calc-btn" id="q3-btn" onclick="location.href='bai3.html'">Click To View Table</button>
+        </section>
+    </main>
+</div>
+
+<script>
+    // for TOC only
+    const tabs = document.querySelectorAll('.tab-btn');
+    const sections = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            sections.forEach(s => s.style.display = 'none');
+
+            const tabId = tab.dataset.tab;
+            document.getElementById(tabId).style.display = 'block';
+
+            clearErrorsAndResults(tabId);
+        });
+    });
+
+    function clearErrorsAndResults(tabId) {
+        const errorEl = document.getElementById(tabId + '-error');
+        const resultEl = document.getElementById(tabId + '-result');
+        if (errorEl) errorEl.textContent = '';
+        if (resultEl) resultEl.textContent = '';
+    }
+
+    // --- JS Câu 1 ---
+
+    const q1NInput = document.getElementById('q1-n');
+    const q1ArrayInput = document.getElementById('q1-array');
+    const q1Btn = document.getElementById('q1-btn');
+    const q1Error = document.getElementById('q1-error');
+    const q1Result = document.getElementById('q1-result');
+
+    q1NInput.addEventListener('input', () => {
+        q1Error.textContent = '';
+        q1Result.textContent = '';
+        const n = Number(q1NInput.value);
+        if (!Number.isInteger(n) || n < 1 || n > 50) {
+            q1ArrayInput.disabled = true;
+            q1Btn.disabled = true;
+            q1Error.textContent = 'Vui lòng nhập số nguyên từ 1 đến 50 cho n.';
+        } else {
+            q1ArrayInput.disabled = false;
+            q1Btn.disabled = false;
+            q1Error.textContent = '';
+        }
+    });
+
+    function validateArray(arrStr, n) {
+        if (!arrStr.trim()) {
+            return 'Chưa nhập phần tử nào.';
+        }
+        const parts = arrStr.split(',').map(s => s.trim());
+        if (parts.length !== n) {
+            return `Số lượng phần tử nhập vào phải đúng bằng ${n}. Bạn đã nhập ${parts.length}.`;
+        }
+        for (let i = 0; i < parts.length; i++) {
+            if (!/^[-+]?\d+$/.test(parts[i])) {
+                return `Phần tử thứ ${i + 1} không phải số nguyên hợp lệ.`;
+            }
+        }
+        return null;
+    }
+
+    function averageOddAtOddPositions(arr) {
+        let sum = 0;
+        let count = 0;
+        for (let i = 0; i < arr.length; i += 2) {
+            if (arr[i] % 2 !== 0) {
+                sum += arr[i];
+                count++;
+            }
+        }
+        return count === 0 ? null : sum / count;
+    }
+
+    q1Btn.addEventListener('click', () => {
+        q1Error.textContent = '';
+        q1Result.textContent = '';
+
+        const n = Number(q1NInput.value);
+        const arrStr = q1ArrayInput.value;
+
+        const error = validateArray(arrStr, n);
+        if (error) {
+            q1Error.textContent = error;
+            q1Result.textContent = '';
+            return;
+        }
+
+        const arr = arrStr.split(',').map(s => parseInt(s.trim(), 10));
+        q1Result.textContent = `Mảng vừa nhập: [${arr.join(', ')}]`;
+
+        const avg = averageOddAtOddPositions(arr);
+        if (avg === null) {
+            q1Result.textContent += '\nKhông có số lẻ ở vị trí lẻ.';
+        } else {
+            q1Result.textContent += `\nTrung bình cộng các số lẻ ở vị trí lẻ là: ${avg.toFixed(2)}`;
+        }
+    });
+
+    // --- JS Câu 2 ---
+
+    const q2Num1Input = document.getElementById('q2-num1');
+    const q2Num2Input = document.getElementById('q2-num2');
+    const q2Btn = document.getElementById('q2-btn');
+    const q2Error = document.getElementById('q2-error');
+    const q2Result = document.getElementById('q2-result');
+
+    function sumDivisors(num) {
+        if (num === 1) return 0;
+        let sum = 1;
+        const limit = Math.floor(Math.sqrt(num));
+        for (let i = 2; i <= limit; i++) {
+            if (num % i === 0) {
+                sum += i;
+                const other = num / i;
+                if (other !== i) sum += other;
+            }
+        }
+        return sum;
+    }
+
+    function isAmicablePair(a, b) {
+        if (!Number.isInteger(a) || !Number.isInteger(b) || a <= 0 || b <= 0) {
+            return false;
+        }
+        const sumA = sumDivisors(a);
+        const sumB = sumDivisors(b);
+        return sumA === b && sumB === a;
+    }
+
+    q2Btn.addEventListener('click', () => {
+        q2Error.textContent = '';
+        q2Result.textContent = '';
+
+        const a = Number(q2Num1Input.value);
+        const b = Number(q2Num2Input.value);
+
+        if (!Number.isInteger(a) || a <= 0) {
+            q2Error.textContent = 'Vui lòng nhập số nguyên dương hợp lệ cho số thứ nhất.';
+            return;
+        }
+        if (!Number.isInteger(b) || b <= 0) {
+            q2Error.textContent = 'Vui lòng nhập số nguyên dương hợp lệ cho số thứ hai.';
+            return;
+        }
+
+        const result = isAmicablePair(a, b);
+        q2Result.textContent = `Hai số ${a} và ${b} ${result ? 'là' : 'không phải'} cặp số thân thiết.`;
+    });
+</script>
+</body>
+</html>
